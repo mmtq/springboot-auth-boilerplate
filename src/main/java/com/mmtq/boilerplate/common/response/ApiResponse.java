@@ -1,4 +1,4 @@
-package com.mmtq.auth_boilerplate.common.response;
+package com.mmtq.boilerplate.common.response;
 
 import lombok.*;
 

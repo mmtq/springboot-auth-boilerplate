@@ -33,8 +33,7 @@ dependencies {
 	testCompileOnly("org.projectlombok:lombok")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testAnnotationProcessor("org.projectlombok:lombok")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
-}
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3")}
 
 tasks.withType<Test> {
 	useJUnitPlatform()

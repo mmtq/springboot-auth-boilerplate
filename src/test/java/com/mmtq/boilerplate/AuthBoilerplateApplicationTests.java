@@ -1,4 +1,4 @@
-package com.mmtq.auth_boilerplate;
+package com.mmtq.boilerplate;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

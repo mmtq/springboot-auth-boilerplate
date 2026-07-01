@@ -1,4 +1,4 @@
-package com.mmtq.auth_boilerplate.common.exception;
+package com.mmtq.boilerplate.common.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

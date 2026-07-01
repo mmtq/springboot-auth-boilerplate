@@ -1,6 +1,6 @@
-package com.mmtq.auth_boilerplate.common.exception;
+package com.mmtq.boilerplate.common.exception;
 
-import com.mmtq.auth_boilerplate.common.response.ApiResponse;
+import com.mmtq.boilerplate.common.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
