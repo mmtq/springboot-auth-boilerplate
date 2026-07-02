@@ -1,5 +1,6 @@
 package com.mmtq.boilerplate.auth.services;
 
+import com.mmtq.boilerplate.auth.DTOs.ChangePasswordRequest;
 import com.mmtq.boilerplate.auth.DTOs.ForgotPasswordRequest;
 import com.mmtq.boilerplate.auth.DTOs.ResetPasswordRequest;
 import com.mmtq.boilerplate.auth.models.PasswordReset;
@@ -22,13 +23,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ResetPasswordService {
+public class PasswordService {
 
     private final UserRepository userRepository;
     private final PasswordResetRepository passwordResetRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final SessionRepository sessionRepository;
+    private final SessionService sessionService;
 
 
     public void forgotPassword(ForgotPasswordRequest request) {
@@ -91,5 +93,32 @@ public class ResetPasswordService {
         sessionRepository.deleteByUserId(user.getId());
 
         passwordResetRepository.delete(reset);
+    }
+
+    public String changePassword(
+            User user,
+            ChangePasswordRequest request
+    ) {
+
+        if (!passwordEncoder.matches(
+                request.getCurrentPassword(),
+                user.getPasswordHash()
+        )) {
+            throw new ApiException(
+                    "Current password is incorrect",
+                    "INVALID_CREDENTIALS",
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
+
+        user.setPasswordHash(
+                passwordEncoder.encode(request.getNewPassword())
+        );
+
+        userRepository.save(user);
+
+        sessionRepository.deleteByUserId(user.getId());
+
+        return sessionService.createSession(user);
     }
 }
