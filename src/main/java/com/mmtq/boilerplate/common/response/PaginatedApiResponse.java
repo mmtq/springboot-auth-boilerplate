@@ -1,21 +1,24 @@
 package com.mmtq.boilerplate.common.response;
 
-import lombok.*;
+import lombok.Data;
+import org.springframework.http.HttpStatus;
 
-import java.util.List;
+@Data
+public class PaginatedApiResponse<T>{
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class PaginatedApiResponse<T> {
+    private Integer currentPage;
+    private Integer totalPages;
+    private Long totalElements;
+    private String message;
+    private Integer status;
+    private T data;
 
-    private List<T> content;
-
-    private int page;
-    private int size;
-    private long totalElements;
-    private int totalPages;
-    private boolean last;
+    public PaginatedApiResponse( T data, Integer currentPage, Integer totalPages, Long totalElements ) {
+        this.currentPage = currentPage;
+        this.totalPages = totalPages;
+        this.totalElements = totalElements;
+        this.data = data;
+        this.message = "Successfully fetched data";
+        this.status = HttpStatus.OK.value();
+    }
 }
