@@ -1,4 +1,4 @@
-package com.mmtq.boilerplate.auth.DTOs;
+package com.mmtq.boilerplate.auth.DTOs.Responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

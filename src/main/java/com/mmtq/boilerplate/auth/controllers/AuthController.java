@@ -1,6 +1,12 @@
 package com.mmtq.boilerplate.auth.controllers;
 
-import com.mmtq.boilerplate.auth.DTOs.*;
+import com.mmtq.boilerplate.auth.DTOs.Requests.LoginRequest;
+import com.mmtq.boilerplate.auth.DTOs.Requests.RegisterRequest;
+import com.mmtq.boilerplate.auth.DTOs.Requests.ResendVerificationEmailRequest;
+import com.mmtq.boilerplate.auth.DTOs.Requests.VerifyEmailRequest;
+import com.mmtq.boilerplate.auth.DTOs.Responses.LoginResponse;
+import com.mmtq.boilerplate.auth.DTOs.Responses.RegisterResponse;
+import com.mmtq.boilerplate.auth.DTOs.Responses.UserResponse;
 import com.mmtq.boilerplate.auth.models.User;
 import com.mmtq.boilerplate.auth.services.AuthService;
 import com.mmtq.boilerplate.auth.services.EmailVerificationService;

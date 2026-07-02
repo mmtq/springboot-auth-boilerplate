@@ -1,8 +1,8 @@
 package com.mmtq.boilerplate.auth.controllers;
 
-import com.mmtq.boilerplate.auth.DTOs.ChangePasswordRequest;
-import com.mmtq.boilerplate.auth.DTOs.ForgotPasswordRequest;
-import com.mmtq.boilerplate.auth.DTOs.ResetPasswordRequest;
+import com.mmtq.boilerplate.auth.DTOs.Requests.ChangePasswordRequest;
+import com.mmtq.boilerplate.auth.DTOs.Requests.ForgotPasswordRequest;
+import com.mmtq.boilerplate.auth.DTOs.Requests.ResetPasswordRequest;
 import com.mmtq.boilerplate.auth.models.User;
 import com.mmtq.boilerplate.auth.services.PasswordService;
 import com.mmtq.boilerplate.common.response.ApiResponse;

@@ -1,9 +1,9 @@
 package com.mmtq.boilerplate.auth.services;
 
-import com.mmtq.boilerplate.auth.DTOs.LoginRequest;
-import com.mmtq.boilerplate.auth.DTOs.LoginResponse;
-import com.mmtq.boilerplate.auth.DTOs.RegisterRequest;
-import com.mmtq.boilerplate.auth.DTOs.RegisterResponse;
+import com.mmtq.boilerplate.auth.DTOs.Requests.LoginRequest;
+import com.mmtq.boilerplate.auth.DTOs.Responses.LoginResponse;
+import com.mmtq.boilerplate.auth.DTOs.Requests.RegisterRequest;
+import com.mmtq.boilerplate.auth.DTOs.Responses.RegisterResponse;
 import com.mmtq.boilerplate.auth.models.User;
 import com.mmtq.boilerplate.auth.repositories.UserRepository;
 import com.mmtq.boilerplate.common.exception.ApiException;

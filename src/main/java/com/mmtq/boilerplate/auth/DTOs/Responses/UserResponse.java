@@ -1,15 +1,17 @@
-package com.mmtq.boilerplate.auth.DTOs;
+package com.mmtq.boilerplate.auth.DTOs.Responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponse {
+public class UserResponse {
     private UUID id;
     private String email;
     private String name;
-    private String token;
 }
+

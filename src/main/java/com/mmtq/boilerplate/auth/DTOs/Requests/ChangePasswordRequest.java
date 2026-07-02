@@ -1,4 +1,4 @@
-package com.mmtq.boilerplate.auth.DTOs;
+package com.mmtq.boilerplate.auth.DTOs.Requests;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
