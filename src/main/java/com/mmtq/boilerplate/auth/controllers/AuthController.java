@@ -3,6 +3,7 @@ package com.mmtq.boilerplate.auth.controllers;
 import com.mmtq.boilerplate.auth.DTOs.*;
 import com.mmtq.boilerplate.auth.models.User;
 import com.mmtq.boilerplate.auth.services.AuthService;
+import com.mmtq.boilerplate.auth.services.EmailVerificationService;
 import com.mmtq.boilerplate.common.exception.ApiException;
 import com.mmtq.boilerplate.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final EmailVerificationService emailVerificationService;
 
     @PostMapping("/register")
     public ApiResponse<RegisterResponse> register(
@@ -91,4 +93,35 @@ public class AuthController {
 
         return new ApiResponse<>("User info retrieved successfully", HttpStatus.OK.value(), response);
     }
+
+    @PostMapping("/resend-email")
+    public ResponseEntity<ApiResponse<Void>> resendVerificationEmail(
+            @RequestBody ResendVerificationEmailRequest request
+    ) {
+        emailVerificationService.resendVerificationEmail(request.getEmail());
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Verification email resent successfully",
+                        200,
+                        null
+                )
+        );
+    }
+
+    @PostMapping("/verify-email")
+    public ApiResponse<Void>
+    verifyEmail(
+            @RequestBody VerifyEmailRequest request
+    ) {
+
+        emailVerificationService.verify(request.getToken());
+
+        return new ApiResponse<>(
+                "Email verified successfully",
+                200,
+                null
+        );
+    }
+
+
 }
