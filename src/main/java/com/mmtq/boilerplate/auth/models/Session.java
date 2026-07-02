@@ -25,6 +25,10 @@ public class Session {
     @Column(nullable = false)
     private UUID userId;
 
+    private String ipAddress;
+
+    private String userAgent;
+
     private Instant expiresAt;
 
     private Instant createdAt;

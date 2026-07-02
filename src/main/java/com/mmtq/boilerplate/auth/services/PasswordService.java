@@ -8,6 +8,7 @@ import com.mmtq.boilerplate.auth.models.User;
 import com.mmtq.boilerplate.auth.repositories.PasswordResetRepository;
 import com.mmtq.boilerplate.auth.repositories.SessionRepository;
 import com.mmtq.boilerplate.auth.repositories.UserRepository;
+import com.mmtq.boilerplate.auth.utils.GetClientIpUtil;
 import com.mmtq.boilerplate.auth.utils.HashUtil;
 import com.mmtq.boilerplate.auth.utils.TokenUtil;
 import com.mmtq.boilerplate.common.exception.ApiException;
@@ -97,13 +98,15 @@ public class PasswordService {
 
     public String changePassword(
             User user,
-            ChangePasswordRequest request
+            ChangePasswordRequest request,
+            String ipAddress,
+            String userAgent
     ) {
 
         if (!passwordEncoder.matches(
                 request.getCurrentPassword(),
-                user.getPasswordHash()
-        )) {
+                user.getPasswordHash())) {
+
             throw new ApiException(
                     "Current password is incorrect",
                     "INVALID_CREDENTIALS",
@@ -117,8 +120,12 @@ public class PasswordService {
 
         userRepository.save(user);
 
-        sessionRepository.deleteByUserId(user.getId());
+        sessionService.deleteAllSessionsByUserId(user.getId());
 
-        return sessionService.createSession(user);
+        return sessionService.createSession(
+                user,
+                ipAddress,
+                userAgent
+        );
     }
 }

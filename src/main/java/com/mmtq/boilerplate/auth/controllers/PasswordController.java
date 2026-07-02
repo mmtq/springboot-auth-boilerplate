@@ -5,7 +5,9 @@ import com.mmtq.boilerplate.auth.DTOs.Requests.ForgotPasswordRequest;
 import com.mmtq.boilerplate.auth.DTOs.Requests.ResetPasswordRequest;
 import com.mmtq.boilerplate.auth.models.User;
 import com.mmtq.boilerplate.auth.services.PasswordService;
+import com.mmtq.boilerplate.auth.utils.GetClientIpUtil;
 import com.mmtq.boilerplate.common.response.ApiResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
+
+import static com.mmtq.boilerplate.auth.utils.GetClientIpUtil.getClientIp;
 
 @RestController
 @RequestMapping("/auth/password")
@@ -51,12 +55,18 @@ public class PasswordController {
     @PostMapping("/change-password")
     public ResponseEntity<ApiResponse<Void>> changePassword(
             Authentication authentication,
-            @Valid @RequestBody ChangePasswordRequest request
+            @Valid @RequestBody ChangePasswordRequest request,
+            HttpServletRequest httpRequest
     ) {
 
         User user = (User) authentication.getPrincipal();
 
-        String sessionToken = authService.changePassword(user, request);
+        String sessionToken = authService.changePassword(
+                user,
+                request,
+                GetClientIpUtil.getClientIp(httpRequest),
+                httpRequest.getHeader("User-Agent")
+        );
 
         ResponseCookie cookie = ResponseCookie.from("sid", sessionToken)
                 .httpOnly(true)

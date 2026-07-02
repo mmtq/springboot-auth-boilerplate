@@ -8,6 +8,7 @@ import com.mmtq.boilerplate.auth.models.User;
 import com.mmtq.boilerplate.auth.repositories.UserRepository;
 import com.mmtq.boilerplate.common.exception.ApiException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,18 +56,24 @@ public class AuthService {
         return response;
     }
 
-    public LoginResponse login(LoginRequest request) {
+    public LoginResponse login(
+            LoginRequest request,
+            String ipAddress,
+            String userAgent
+    ) {
 
-        String normalizedEmail = request.getEmail().trim().toLowerCase();
-        
-        User user = userRepository.findByEmail(normalizedEmail)
-                .orElseThrow(() -> new ApiException("Invalid credentials", "INVALID_CREDENTIALS", org.springframework.http.HttpStatus.UNAUTHORIZED));
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new ApiException("Invalid credentials", "INVALID_CREDENTIALS", HttpStatus.UNAUTHORIZED));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
-            throw new ApiException("Invalid credentials", "INVALID_CREDENTIALS", org.springframework.http.HttpStatus.UNAUTHORIZED);
+            throw new ApiException("Invalid credentials", "INVALID_CREDENTIALS", HttpStatus.UNAUTHORIZED);
         }
 
-        String sessionToken = sessionService.createSession(user);
+        String sessionToken = sessionService.createSession(
+                user,
+                ipAddress,
+                userAgent
+        );
 
         return new LoginResponse(
                 user.getId(),

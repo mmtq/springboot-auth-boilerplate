@@ -10,8 +10,11 @@ import com.mmtq.boilerplate.auth.DTOs.Responses.UserResponse;
 import com.mmtq.boilerplate.auth.models.User;
 import com.mmtq.boilerplate.auth.services.AuthService;
 import com.mmtq.boilerplate.auth.services.EmailVerificationService;
+import com.mmtq.boilerplate.auth.utils.GetClientIpUtil;
 import com.mmtq.boilerplate.common.exception.ApiException;
 import com.mmtq.boilerplate.common.response.ApiResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -40,12 +43,17 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponse>> login(
-            @RequestBody LoginRequest request
+            @Valid @RequestBody LoginRequest request,
+            HttpServletRequest httpRequest
     ) {
 
-        LoginResponse result = authService.login(request);
+        LoginResponse response = authService.login(
+                request,
+                GetClientIpUtil.getClientIp(httpRequest),
+                httpRequest.getHeader("User-Agent")
+        );
 
-        ResponseCookie cookie = ResponseCookie.from("sid", result.getToken())
+        ResponseCookie cookie = ResponseCookie.from("sid", response.getToken())
                 .httpOnly(true)
                 .secure(false) // true in production
                 .sameSite("Lax")
@@ -56,7 +64,7 @@ public class AuthController {
         return ResponseEntity
                 .ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body( new ApiResponse<>("Login successful", HttpStatus.OK.value(), result) );
+                .body( new ApiResponse<>("Login successful", HttpStatus.OK.value(), response) );
     }
 
     @PostMapping("/logout")
