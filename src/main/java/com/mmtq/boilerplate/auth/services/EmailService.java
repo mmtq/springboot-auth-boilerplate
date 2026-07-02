@@ -26,7 +26,17 @@ public class EmailService {
                         token
                 )
         );
+    }
 
+    public void sendPasswordReset(String email, String token) {
+
+        System.out.println("""
+            
+            RESET PASSWORD
+
+            http://localhost:8080/auth/reset-password?token=%s
+            
+            """.formatted(token));
     }
 
 }
