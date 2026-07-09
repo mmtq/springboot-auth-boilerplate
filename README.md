@@ -8,6 +8,9 @@ This project implements a session-based authentication system using secure HttpO
 
 ## Features Implemented
 
+<img width="463" height="887" alt="image" src="https://github.com/user-attachments/assets/fc383d57-7716-4d46-83ad-12fb3dc09cb5" />
+
+
 ### Authentication
 
 - User registration
