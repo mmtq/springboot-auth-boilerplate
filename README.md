@@ -1,4 +1,4 @@
-# Spring Boot Authentication Boilerplate
+# Spring Boot Boilerplate with Authentication
 
 A production-oriented authentication boilerplate built with Spring Boot, Spring Security, JPA, and PostgreSQL.
 
